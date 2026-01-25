@@ -1,0 +1,76 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {  
+            "name": "jlink",//调试器的名字
+            "cwd": "${workspaceFolder}",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "jlink",//所使用的烧录器类型
+            "interface": "swd",//所用芯片接口类型
+            "rtos": "FreeRTOS",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            //以下为需要根据自己需求和配置修改的部分
+            "executable": "${workspaceRoot}/build/Butterfly_v3.elf",//将编译文件名.elf改为自己已编译的
+            // "svdFile": "STM32F103.svd",//查表找对应的对应芯片型号对应的
+            "device": "STM32G031xx",//改对应的芯片类型
+        },
+        {
+            "name": "DAPLink",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}",
+            "runToEntryPoint": "main",
+            "interface": "swd",
+            "rtos": "FreeRTOS",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            //以下为需要根据自己需求和配置修改的部分
+            "executable": "${workspaceFolder}/build/Butterfly_v3.elf",//工程对应的.elf文件
+            "svdFile": "${workspaceFolder}/STM32F103.svd",//添加.svd文件可查看寄存器
+            "configFiles": [
+                "interface/cmsis-dap.cfg",
+                "target/stm32f1x.cfg"
+            ],
+            "searchDir": [
+                "D:/msys64/ucrt64/share/openocd/scripts"//更换为openopcd文件夹下的`scripts`路径
+            ],
+            "device": "STM32F103C8",//更改为实际芯片型号 
+        },
+        {
+            "name": "ST-Link",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+                        "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            //以下为需要根据自己需求和配置修改的部分
+            "executable": "${workspaceFolder}/build/Butterfly_v3.elf",
+            "device": "STM32F103C8", // 根据实际芯片型号填写
+            "preLaunchTask": "build task",
+            "configFiles": [
+                "interface/stlink-v2.cfg",
+                "target/stm32f1x.cfg"
+            ],
+            "searchDir": [
+                "D:/msys64/ucrt64/share/openocd/scripts"
+            ],
+            "svdPath": "STM32F103.svd"
+        }
+    ]
+}

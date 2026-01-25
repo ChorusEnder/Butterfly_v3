@@ -1,0 +1,95 @@
+#pragma once
+
+#include "cmsis_os.h"
+#include "FreeRTOS.h"
+#include "butterfly.h"
+#include "motor.h"
+// #include "dwt.h"
+#include "daemon.h"
+
+
+osThreadId motorTaskHandle;
+const osThreadAttr_t motorTask_attributes = {
+  .name = "motorTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+
+osThreadId butterflyTaskHandle;
+const osThreadAttr_t butterflyTask_attributes = {
+  .name = "butterflyTask",
+  .stack_size = 128 * 2,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+
+osThreadId angleTaskHandle;
+const osThreadAttr_t angleTask_attributes = {
+  .name = "angleTask",
+  .stack_size = 128 * 1,
+  .priority = (osPriority_t) osPriorityNormal1,
+};
+
+osThreadId daemonTaskHandle;
+const osThreadAttr_t daemonTask_attributes = {
+  .name = "daemonTask",
+  .stack_size = 128 * 1,
+  .priority = (osPriority_t) osPriorityNormal1,
+};
+
+void motorTASK(void *argument);
+void butterflyTASK(void *argument);
+void angleTASK(void *argument);
+void daemonTASK(void *argument);
+
+void OSTask_Init(void)
+{
+    motorTaskHandle = osThreadNew(motorTASK, NULL, &motorTask_attributes);
+    butterflyTaskHandle = osThreadNew(butterflyTASK, NULL, &butterflyTask_attributes);
+    angleTaskHandle = osThreadNew(angleTASK, NULL, &angleTask_attributes);
+    daemonTaskHandle = osThreadNew(daemonTASK, NULL, &daemonTask_attributes);
+}
+
+void motorTASK(void *argument)
+{
+
+    /* Infinite loop */
+    for(;;)
+    {
+        //频率过快似乎会导致iic通信失败
+        MotorTask();//任务运行时间约0.5ms
+        osDelay(5);
+
+    }
+}
+
+void butterflyTASK(void *argument)
+{
+    
+    /* Infinite loop */
+    for(;;)
+    {
+        Butterfly_Task();
+        osDelay(10);
+    }
+}
+
+void angleTASK(void *argument)
+{
+
+    /* Infinite loop */
+    for(;;)
+    {
+        MotorMeasure();
+        osDelay(2);
+    }
+}
+
+void daemonTASK(void *argument)
+{
+    /* Infinite loop */
+    for(;;)
+    {
+        DaemonTask();
+        osDelay(10);
+    }
+}
