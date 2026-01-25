@@ -44,11 +44,22 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+    application/butterfly.c
+    moudules/motor.c
+    moudules/pid.c
+    moudules/remote_fs.c
+    moudules/daemon.c
+    bsp/bsp_uart.c
+    bsp/bsp_adc.c
+
     # Add user sources here
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    application
+    moudules
+    bsp
     # Add user defined include paths
 )
 

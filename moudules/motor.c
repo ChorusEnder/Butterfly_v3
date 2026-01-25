@@ -64,51 +64,6 @@ float Deal_Angle(float raw_angle, float offset)
     return angle;
 }
 
-void MotorMeasure()
-{
-    Motor_Instance_s *motor;
-
-    for(int i = 0; i < MOTOR_COUNT; i++)
-    {
-        if (motor_instance[i] == NULL) break;
-
-        motor = motor_instance[i];
-        
-        //角度获取
-        float raw_angle = *motor->setting.ptr_angle;
-        if (motor->setting.motor_offset == 0.0f){
-            motor->measures.angle = raw_angle;
-        }
-        else{
-            motor->measures.angle = Deal_Angle(raw_angle, motor->setting.motor_offset);
-            if (motor->setting.flag_feedback_reverse == FEEDBACK_DIR_REVERSE) {
-                motor->measures.angle *= -1;
-            }
-        }
-        
-
-        // //速度计算
-        // delta_angle = motor->measures.angle - motor->measures.angle_last;
-        // motor->measures.angle_last = motor->measures.angle;
-        // //处理角度跳变
-        // if (delta_angle > 180) {
-        //     delta_angle -= 360;
-        // }else if(
-        //     delta_angle < -180) {
-        //     delta_angle += 360;
-        // }
-
-        // motor->measures.dt = DWT_GetDeltaT_s(&motor->measures.last_cnt);
-        // speed = delta_angle / motor->measures.dt;
-        // motor->measures.speed = speed;
-
-        // //防止第一次测量时速度异常大
-        // if(flag == 0) {
-        //     motor->measures.speed = 0;
-        //     flag = 1;
-        // }
-    }
-}
 
 /**
  * @brief 由于用两个PWM控制一个电机,所以这里的速度是-100~100,根据正负号改变PWM信号使能,从而改变方向
@@ -131,6 +86,18 @@ void MotorTask()
         setting = &motor->setting;
         controller = &motor->controller;
         pid_ref = controller->pid_ref;
+
+        //角度获取
+        float raw_angle = *motor->setting.ptr_angle;
+        if (motor->setting.motor_offset == 0.0f){
+            motor->measures.angle = raw_angle;
+        }
+        else{
+            motor->measures.angle = Deal_Angle(raw_angle, motor->setting.motor_offset);
+            if (motor->setting.flag_feedback_reverse == FEEDBACK_DIR_REVERSE) {
+                motor->measures.angle *= -1;
+            }
+        }
 
         //角度环计算
         if (controller->loop_type & ANGLE_LOOP) {

@@ -6,6 +6,7 @@
 #include "remote_fs.h"
 #include "butterfly.h"
 // #include "butterfly_task.h"
+#include "daemon.h"
 
 static butterfly_mode_e butterfly_mode;
 static Motor_Instance_s* motor_l;
@@ -204,13 +205,15 @@ static void MotorControl()
 
 void Butterfly_Task()
 {
-    // time = DWT_GetTimeLine_s();
-    // dt = DWT_GetDeltaT_s(&last_t);
 
+    //application
     RemoteControl();
     MotorControl();
 
-    // TMAG5273_ReadReg(&hi2c2, &reg_add_r, data_r);
-    // TMAG5273_WriteReg(&hi2c2, &reg_add_w, &data_w);
+    //moudules
+    MotorTask();
+    DaemonTask();
+
+
 
 }

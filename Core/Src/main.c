@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "butterfly.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,13 +97,14 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
-
+  Butterfly_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    Butterfly_Task();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
