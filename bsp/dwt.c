@@ -1,5 +1,4 @@
 #include "dwt.h"
-#include "core_cm0plus.h"
 
 static DWT_Time_s DWT_Time;//时间轴结构体实例
 static uint32_t CPU_Freq_Hz, CPU_Freq_us, CPU_Freq_ms;//除数,将周期数转换为对应的的时间
@@ -80,7 +79,7 @@ static void DWT_SysTime_Update(void)
 
     DWT_CNT_Update();
 
-    CYCCNT64 = (uint64_t)CYCCNT_RoundCount * (uint64_t)UINT32_MAX + (uint64_t)cnt_now;
+    CYCCNT64 = (uint64_t)CYCCNT_RoundCount * (uint64_t)(UINT32_MAX+1) + (uint64_t)cnt_now;
     CNT_Temp1 = CYCCNT64 / CPU_Freq_Hz;
     CNT_Temp2 = CYCCNT64 - CNT_Temp1 * CPU_Freq_Hz;
     DWT_Time.s = CNT_Temp1;

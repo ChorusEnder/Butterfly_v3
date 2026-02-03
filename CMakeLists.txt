@@ -51,6 +51,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     moudules/daemon.c
     bsp/bsp_uart.c
     bsp/bsp_adc.c
+    bsp/bsp_timer.c
 
     # Add user sources here
 )

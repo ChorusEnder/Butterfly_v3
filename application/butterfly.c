@@ -1,12 +1,10 @@
 #include "tim.h"
 #include "arm_math.h"
-
-#include "motor.h"
-// #include "as5600.h"
-#include "remote_fs.h"
 #include "butterfly.h"
-// #include "butterfly_task.h"
+#include "motor.h"
+#include "remote_fs.h"
 #include "daemon.h"
+#include "bsp_timer.h"
 
 static butterfly_mode_e butterfly_mode;
 static Motor_Instance_s* motor_l;
@@ -34,7 +32,8 @@ static float br = 20;
 void Butterfly_Init()
 {
     // OSTask_Init();
-    // DWT_Init(64);
+    Timer_Init(&htim2, 64);
+    rc_fs = RC_Fs_Init_Ibus(&huart1);
 
     Motor_Init_Config_s motorConfig = {
         .controller = {
@@ -95,8 +94,6 @@ void Butterfly_Init()
     motorConfig.setting.ptr_angle = NULL;
     motorConfig.setting.ptr_speed = NULL;
     motor_r = Motor_Init(&motorConfig);//正面
-
-    rc_fs = RC_Fs_Init_Ibus(&huart1);
 
 }
 
@@ -213,7 +210,5 @@ void Butterfly_Task()
     //moudules
     MotorTask();
     DaemonTask();
-
-
 
 }

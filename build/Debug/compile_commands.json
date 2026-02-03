@@ -115,6 +115,12 @@
 },
 {
   "directory": "D:/YueLu/projects/G031/Butterfly_v3/build/Debug",
+  "command": "D:\\stm32\\config\\arm-gnu-toolchain-14.3\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32G031xx -DUSE_HAL_DRIVER -ID:/YueLu/projects/G031/Butterfly_v3/application -ID:/YueLu/projects/G031/Butterfly_v3/moudules -ID:/YueLu/projects/G031/Butterfly_v3/bsp -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Core/Inc -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/STM32G0xx_HAL_Driver/Inc -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32G0xx/Include -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/CMSIS/Include -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Middlewares/ST/ARM/DSP/Inc  -mcpu=cortex-m0plus  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\Butterfly_v3.dir\\bsp\\bsp_timer.c.obj -c D:\\YueLu\\projects\\G031\\Butterfly_v3\\bsp\\bsp_timer.c",
+  "file": "D:/YueLu/projects/G031/Butterfly_v3/bsp/bsp_timer.c",
+  "output": "D:/YueLu/projects/G031/Butterfly_v3/build/Debug/CMakeFiles/Butterfly_v3.dir/bsp/bsp_timer.c.obj"
+},
+{
+  "directory": "D:/YueLu/projects/G031/Butterfly_v3/build/Debug",
   "command": "D:\\stm32\\config\\arm-gnu-toolchain-14.3\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32G031xx -DUSE_HAL_DRIVER -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Core/Inc -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/STM32G0xx_HAL_Driver/Inc -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32G0xx/Include -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Drivers/CMSIS/Include -ID:/YueLu/projects/G031/Butterfly_v3/cmake/stm32cubemx/../../Middlewares/ST/ARM/DSP/Inc  -mcpu=cortex-m0plus  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Core\\Src\\system_stm32g0xx.c.obj -c D:\\YueLu\\projects\\G031\\Butterfly_v3\\Core\\Src\\system_stm32g0xx.c",
   "file": "D:/YueLu/projects/G031/Butterfly_v3/Core/Src/system_stm32g0xx.c",
   "output": "D:/YueLu/projects/G031/Butterfly_v3/build/Debug/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32g0xx.c.obj"

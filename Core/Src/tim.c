@@ -27,7 +27,6 @@
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim16;
-DMA_HandleTypeDef hdma_tim16_trig_com;
 
 /* TIM2 init function */
 void MX_TIM2_Init(void)
@@ -212,27 +211,6 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     /* TIM16 clock enable */
     __HAL_RCC_TIM16_CLK_ENABLE();
 
-    /* TIM16 DMA Init */
-    /* TIM16_TRIG_COM Init */
-    hdma_tim16_trig_com.Instance = DMA1_Channel3;
-    hdma_tim16_trig_com.Init.Request = DMA_REQUEST_TIM16_TRIG_COM;
-    hdma_tim16_trig_com.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_tim16_trig_com.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_tim16_trig_com.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_tim16_trig_com.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_tim16_trig_com.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_tim16_trig_com.Init.Mode = DMA_NORMAL;
-    hdma_tim16_trig_com.Init.Priority = DMA_PRIORITY_LOW;
-    if (HAL_DMA_Init(&hdma_tim16_trig_com) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    /* Several peripheral DMA handle pointers point to the same DMA handle.
-     Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_TRIGGER],hdma_tim16_trig_com);
-    __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_COMMUTATION],hdma_tim16_trig_com);
-
     /* TIM16 interrupt Init */
     HAL_NVIC_SetPriority(TIM16_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(TIM16_IRQn);
@@ -356,10 +334,6 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE END TIM16_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM16_CLK_DISABLE();
-
-    /* TIM16 DMA DeInit */
-    HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_TRIGGER]);
-    HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_COMMUTATION]);
 
     /* TIM16 interrupt Deinit */
     HAL_NVIC_DisableIRQ(TIM16_IRQn);

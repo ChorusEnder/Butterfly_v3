@@ -43,7 +43,7 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 59,
+				"line" : 60,
 				"parent" : 0
 			},
 			{
@@ -151,7 +151,8 @@
 				15,
 				16,
 				17,
-				18
+				18,
+				19
 			]
 		},
 		{
@@ -280,7 +281,8 @@
 				15,
 				16,
 				17,
-				18
+				18,
+				19
 			]
 		},
 		{
@@ -294,7 +296,6 @@
 			"name" : "Object Libraries",
 			"sourceIndexes" : 
 			[
-				19,
 				20,
 				21,
 				22,
@@ -314,7 +315,8 @@
 				36,
 				37,
 				38,
-				39
+				39,
+				40
 			]
 		}
 	],
@@ -432,6 +434,12 @@
 			"backtrace" : 6,
 			"compileGroupIndex" : 0,
 			"path" : "bsp/bsp_adc.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 6,
+			"compileGroupIndex" : 0,
+			"path" : "bsp/bsp_timer.c",
 			"sourceGroupIndex" : 0
 		},
 		{
