@@ -12,15 +12,15 @@
             "runToEntryPoint": "main",
             "servertype": "jlink",//所使用的烧录器类型
             "interface": "swd",//所用芯片接口类型
-            "rtos": "FreeRTOS",
+            // "rtos": "FreeRTOS",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 4
             },
             //以下为需要根据自己需求和配置修改的部分
-            "executable": "${workspaceRoot}/build/Butterfly_v3.elf",//将编译文件名.elf改为自己已编译的
-            // "svdFile": "STM32F103.svd",//查表找对应的对应芯片型号对应的
-            "device": "STM32G031xx",//改对应的芯片类型
+            "executable": "${workspaceRoot}/build/Debug/Butterfly_v3.elf",//将编译文件名.elf改为自己已编译的
+            "svdFile": "STM32G031.svd",//查表找对应的对应芯片型号对应的
+            "device": "STM32G031G8",//改对应的芯片类型
         },
         {
             "name": "DAPLink",
@@ -30,22 +30,22 @@
             "cwd": "${workspaceFolder}",
             "runToEntryPoint": "main",
             "interface": "swd",
-            "rtos": "FreeRTOS",
+            // "rtos": "FreeRTOS",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 4
             },
             //以下为需要根据自己需求和配置修改的部分
-            "executable": "${workspaceFolder}/build/Butterfly_v3.elf",//工程对应的.elf文件
-            "svdFile": "${workspaceFolder}/STM32F103.svd",//添加.svd文件可查看寄存器
             "configFiles": [
                 "interface/cmsis-dap.cfg",
-                "target/stm32f1x.cfg"
+                "target/stm32g0x1.cfg"
             ],
             "searchDir": [
                 "D:/msys64/ucrt64/share/openocd/scripts"//更换为openopcd文件夹下的`scripts`路径
             ],
-            "device": "STM32F103C8",//更改为实际芯片型号 
+            "executable": "${workspaceRoot}/build/Debug/Butterfly_v3.elf",//工程对应的.elf文件
+            "svdFile": "${workspaceFolder}/STM32G031.svd",//添加.svd文件可查看寄存器
+            "device": "STM32G031G8",//更改为实际芯片型号+++++ 
         },
         {
             "name": "ST-Link",
