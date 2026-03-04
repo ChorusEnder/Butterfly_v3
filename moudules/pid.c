@@ -1,5 +1,6 @@
 #include "pid.h"
 // #include "dwt.h"
+#include "bsp_timer.h"
 
 //梯形积分
 static void Pid_T_Intergral(PID_Instance_s *pid)
@@ -74,8 +75,7 @@ static void OutputLimit(PID_Instance_s *pid)
 float PIDCalculate(PID_Instance_s *pid, float measure, float target)
 {
     //获取两次计算的时间间隔
-    // pid->dt = DWT_GetDeltaT_s(&pid->DWT_CNT);
-    pid->dt =0.005f;
+    pid->dt = Timer_GetDeltaT_s(&pid->DWT_CNT);
 
     pid->measure = measure;
     pid->err[1] = pid->err[0];

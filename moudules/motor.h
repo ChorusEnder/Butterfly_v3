@@ -97,7 +97,6 @@ typedef struct {
 
 Motor_Instance_s* Motor_Init(Motor_Init_Config_s *config);
 void MotorTask();
-void MotorMeasure();
 
 //设定电机输出ref
 void MotorSetRef(Motor_Instance_s *motor, float ref);
