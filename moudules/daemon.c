@@ -1,7 +1,5 @@
 #include "daemon.h"
 
-
-
 static Daemon_Instance daemon_instances[5];
 static uint8_t idx;
 

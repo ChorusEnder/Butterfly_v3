@@ -5,6 +5,7 @@
 #include "remote_fs.h"
 #include "daemon.h"
 #include "bsp_timer.h"
+#include "bsp_adc.h"
 
 static butterfly_mode_e butterfly_mode;
 static Motor_Instance_s* motor_l;
@@ -12,6 +13,12 @@ static Motor_Instance_s* motor_r;
 float feedforward_l;
 float feedforward_r;
 static RC_Fs_Ctrl_s *rc_fs;
+static uint16_t *ptr_adc_value;
+
+/*------------------时间相关----------------------------*/
+static float delt_t;
+static uint32_t cnt_last;
+/*------------------时间相关----------------------------*/
 
 
 /*-------------------以下是Asin(wt)+B有关的参数---------*/
@@ -29,10 +36,13 @@ static float br = 20;
 // static float dt;
 // static uint32_t last_t;
 
+static uint16_t a;
+
 void Butterfly_Init()
 {
     // OSTask_Init();
     Timer_Init(&htim2, 64);
+    ptr_adc_value = BSP_ADC_Init(&hadc1);
     rc_fs = RC_Fs_Init_Ibus(&huart1);
 
     Motor_Init_Config_s motorConfig = {
@@ -95,6 +105,7 @@ void Butterfly_Init()
     motorConfig.setting.ptr_speed = NULL;
     motor_r = Motor_Init(&motorConfig);//正面
 
+    butterfly_mode = BUTTERFLY_MODE_MECHANISM;
 }
 
 
@@ -139,10 +150,11 @@ static void RemoteControl()
 static void MotorControl()
 {
     //前馈计算,似乎可以直接移至motor.c中
-    feedforward_l = 50 * cos(MotorGetAngle(motor_l) * 3.14f / 180.0f);
-    feedforward_r = -100 * cos(MotorGetAngle(motor_r) * 3.14f / 180.0f);
+    // feedforward_l = 50 * cos(MotorGetAngle(motor_l) * 3.14f / 180.0f);
+    // feedforward_r = -100 * cos(MotorGetAngle(motor_r) * 3.14f / 180.0f);
     // feedforward_l = 50 * arm_cos_f32(MotorGetAngle(motor_l) * 3.14f / 180.0f);
     // feedforward_r = -100 * arm_cos_f32(MotorGetAngle(motor_r) * 3.14f / 180.0f);
+    
     MotorSetFeedforward(motor_l, feedforward_l);
     MotorSetFeedforward(motor_r, feedforward_r);
 
@@ -151,29 +163,33 @@ static void MotorControl()
     MotorEnable(motor_r);
 
     //默认角度闭环控制
-    MotorChangeLoop(motor_l, ANGLE_LOOP);
-    MotorChangeLoop(motor_r, ANGLE_LOOP);
-
+    
     switch (butterfly_mode)
     {
         case BUTTERFLY_MODE_STOP:
-            //急停模式
+        //急停模式
             MotorStop(motor_l);
             MotorStop(motor_r);
-            break;
-
+        break;
+        
         case BUTTERFLY_MODE_POSITION:
-            //定点模式,通过遥控器控制翅膀位置
+        //定点模式,通过遥控器控制翅膀位置
+            
+            MotorChangeLoop(motor_l, ANGLE_LOOP);
+            MotorChangeLoop(motor_r, ANGLE_LOOP);
             
             //限幅
             if (angle_l < -80) angle_l = -80;
             if (angle_r < -80) angle_r = -80;
             if (angle_l > 100) angle_l = 90;
             if (angle_r > 100) angle_r = 90;
-
+            
             break;
         case BUTTERFLY_MODE_FLYING:
-            //飞行模式,通过遥控器控制翅膀速度,转向,升降...
+        //飞行模式,通过遥控器控制翅膀速度,转向,升降...
+        
+            MotorChangeLoop(motor_l, ANGLE_LOOP);
+            MotorChangeLoop(motor_r, ANGLE_LOOP);
 
             // angle_l = Al * arm_sin_f32(w * time) + bl;
             // angle_r = Ar * arm_sin_f32(w * time) + br;
@@ -191,6 +207,9 @@ static void MotorControl()
             MotorSetFeedforward(motor_l, 0);
             MotorSetFeedforward(motor_r, 0);
 
+            angle_l = 200;
+            angle_r = 200;
+
             break;     
     }
 
@@ -202,13 +221,17 @@ static void MotorControl()
 
 void Butterfly_Task()
 {
+    time = Timer_GetTime_s();
+    delt_t = Timer_GetDeltaT_s(&cnt_last);
 
     //application
-    RemoteControl();
+    // RemoteControl();
     MotorControl();
 
     //moudules
     MotorTask();
     DaemonTask();
+
+    a++;
 
 }
