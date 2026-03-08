@@ -48,6 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     moudules/motor.c
     moudules/pid.c
     moudules/remote_fs.c
+    moudules/elrs.c
     moudules/daemon.c
     bsp/bsp_uart.c
     bsp/bsp_adc.c

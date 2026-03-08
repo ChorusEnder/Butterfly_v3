@@ -94,8 +94,6 @@ static void Decode_Sbus()
 static void RCLostCallback()
 {
     memset(&rc_data, 0, sizeof(RC_Fs_Ctrl_s));
-
-    
 }
 
 RC_Fs_Ctrl_s* RC_Fs_Init_Sbus(UART_HandleTypeDef *usart_handle)
@@ -110,8 +108,8 @@ RC_Fs_Ctrl_s* RC_Fs_Init_Sbus(UART_HandleTypeDef *usart_handle)
 
     // 进行守护进程的注册,用于定时检查遥控器是否正常工作
     Daemon_Init_Config_s daemon_conf = {
-        .reload_count = 10, 
-        .init_count = 20,
+        .reload_count = 100,
+        .init_count = 200,
         .callback = RCLostCallback,
         .owner_id = NULL, // 只有1个遥控器,不需要owner_id
     };

@@ -3,6 +3,8 @@
 static Daemon_Instance daemon_instances[5];
 static uint8_t idx;
 
+static uint16_t freq;//用于减小进程频率
+
 Daemon_Instance *DaemonInit(Daemon_Init_Config_s *config)
 {
     Daemon_Instance *instance = &daemon_instances[idx++];
@@ -19,6 +21,9 @@ void DaemonTask(void)
     Daemon_Instance *instance;
     for (uint8_t i = 0; i < idx; i++) {
         instance = &daemon_instances[i];
+
+        if ((freq++ % 100) !=0)
+            break;
 
         if (instance->temp_count > 0) {
             instance->temp_count--;

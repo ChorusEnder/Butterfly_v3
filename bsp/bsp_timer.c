@@ -1,6 +1,5 @@
 #include "bsp_timer.h"
 
-
 static Time_s Timeline;//时间轴结构体实例
 static TIM_HandleTypeDef *htim;//用于定时的定时器
 static uint32_t CPU_Freq_Hz, CPU_Freq_us, CPU_Freq_ms;//除数,将周期数转换为对应的的时间

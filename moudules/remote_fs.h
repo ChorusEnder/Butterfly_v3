@@ -18,7 +18,8 @@
 typedef enum
 {
     RC_TYPE_SBUS,
-    RC_TYPE_IBUS
+    RC_TYPE_IBUS,
+    RC_TYPE_ELRC
 } Type_e;
 
 typedef struct

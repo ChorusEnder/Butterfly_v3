@@ -3,6 +3,7 @@
 #include "butterfly.h"
 #include "motor.h"
 #include "remote_fs.h"
+#include "elrs.h"
 #include "daemon.h"
 #include "bsp_timer.h"
 #include "bsp_adc.h"
@@ -13,6 +14,7 @@ static Motor_Instance_s* motor_r;
 float feedforward_l;
 float feedforward_r;
 static RC_Fs_Ctrl_s *rc_fs;
+static ELRS_Data *rc_elrs;
 static uint16_t *ptr_adc_value;
 
 /*------------------时间相关----------------------------*/
@@ -43,7 +45,9 @@ void Butterfly_Init()
     // OSTask_Init();
     Timer_Init(&htim2, 64);
     ptr_adc_value = BSP_ADC_Init(&hadc1);
-    rc_fs = RC_Fs_Init_Ibus(&huart1);
+    // rc_fs = RC_Fs_Init_Sbus(&huart1);
+    rc_elrs = REMOTE_ELRS_Init(&huart1);
+    
 
     Motor_Init_Config_s motorConfig = {
         .controller = {
@@ -221,8 +225,8 @@ static void MotorControl()
 
 void Butterfly_Task()
 {
-    time = Timer_GetTime_s();
-    delt_t = Timer_GetDeltaT_s(&cnt_last);
+    // time = Timer_GetTime_s();
+    // delt_t = Timer_GetDeltaT_s(&cnt_last);
 
     //application
     // RemoteControl();
