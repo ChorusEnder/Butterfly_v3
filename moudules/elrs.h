@@ -1,7 +1,7 @@
 #ifndef __ELRS_H__
 #define __ELRS_H__
 #include "main.h"
-#define ELRS_MAX_FRAME_SIZE 36 // 空闲中断接收的最大帧长
+#define ELRS_MAX_FRAME_SIZE 26 // 空闲中断接收的最大帧长
 
 /*
 https://github.com/crsf-wg/crsf/wiki/Packet-Types CRSF协议定义

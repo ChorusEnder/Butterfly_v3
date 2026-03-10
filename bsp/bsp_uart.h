@@ -16,6 +16,7 @@ typedef struct {
     uint8_t rx_buffer_size;//实际包大小
     UART_HandleTypeDef *huart;
     uart_callback callback;
+    uint8_t call_size;
 } UART_Instance;
 
 typedef struct {

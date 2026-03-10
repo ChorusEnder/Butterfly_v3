@@ -252,7 +252,7 @@ build Butterfly_v3.elf: C_EXECUTABLE_LINKER__Butterfly_v3_Debug cmake/stm32cubem
   LINK_FLAGS = -mcpu=cortex-m0plus  -T "D:/YueLu/projects/G031/Butterfly_v3/STM32G031XX_FLASH.ld" --specs=nano.specs -Wl,-Map=Butterfly_v3.map -Wl,--gc-sections -Wl,--print-memory-usage
   LINK_LIBRARIES = -lm
   OBJECT_DIR = CMakeFiles\Butterfly_v3.dir
-  POST_BUILD = cd .
+  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D D:\YueLu\projects\G031\Butterfly_v3\build\Debug && arm-none-eabi-objcopy -O ihex D:/YueLu/projects/G031/Butterfly_v3/build/Debug/Butterfly_v3.elf Butterfly_v3.hex && arm-none-eabi-objcopy -O binary D:/YueLu/projects/G031/Butterfly_v3/build/Debug/Butterfly_v3.elf Butterfly_v3.bin"
   PRE_LINK = cd .
   TARGET_FILE = Butterfly_v3.elf
   TARGET_PDB = Butterfly_v3.elf.dbg

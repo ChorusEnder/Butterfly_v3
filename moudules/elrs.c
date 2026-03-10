@@ -3,9 +3,9 @@
 #include "daemon.h"
 
 static ELRS_Data elrs_data;;
-UART_Instance *rc_uart_instance;
+static UART_Instance *rc_uart_instance;
 static Daemon_Instance *rc_daemon_instance;
-uint8_t elrs_data_temp[ELRS_MAX_FRAME_SIZE];//接收缓冲区
+static uint8_t elrs_data_temp[ELRS_MAX_FRAME_SIZE];//接收缓冲区
 
 float float_Map(float input_value, float input_min, float input_max, float output_min, float output_max)
 {

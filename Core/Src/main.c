@@ -84,6 +84,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  HAL_Delay(1000);
 
   /* USER CODE END SysInit */
 
@@ -95,6 +96,7 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+
   Butterfly_Init();
   /* USER CODE END 2 */
 

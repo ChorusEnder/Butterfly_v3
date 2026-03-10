@@ -17,6 +17,11 @@ static RC_Fs_Ctrl_s *rc_fs;
 static ELRS_Data *rc_elrs;
 static uint16_t *ptr_adc_value;
 
+static uint16_t adc0;
+static uint16_t adc1;
+static uint16_t Temperture;
+static uint16_t vrefint;
+
 /*------------------时间相关----------------------------*/
 static float delt_t;
 static uint32_t cnt_last;
@@ -150,6 +155,14 @@ static void RemoteControl()
     }
 }
 
+void RemoteControl_ELRS()
+{
+    //由ELRS遥控器控制翼面位置
+    butterfly_mode = BUTTERFLY_MODE_POSITION;
+
+    angle_l = rc_elrs->Left_Y * 2;
+}
+
 
 static void MotorControl()
 {
@@ -211,8 +224,8 @@ static void MotorControl()
             MotorSetFeedforward(motor_l, 0);
             MotorSetFeedforward(motor_r, 0);
 
-            angle_l = 200;
-            angle_r = 200;
+            // angle_l = 200;
+            // angle_r = 200;
 
             break;     
     }
@@ -225,11 +238,18 @@ static void MotorControl()
 
 void Butterfly_Task()
 {
+    adc0 = ptr_adc_value[RANK1];
+    adc1 = ptr_adc_value[RANK2];
+    Temperture = ptr_adc_value[RANK3];
+    vrefint = ptr_adc_value[RANK4];
+
+
     // time = Timer_GetTime_s();
     // delt_t = Timer_GetDeltaT_s(&cnt_last);
 
     //application
     // RemoteControl();
+    RemoteControl_ELRS();
     MotorControl();
 
     //moudules
